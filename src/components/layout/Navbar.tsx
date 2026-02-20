@@ -2,21 +2,24 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Products", to: "/products" },
-  { label: "Applications", to: "/applications" },
-  { label: "Custom Service", to: "/custom-service" },
-  { label: "About", to: "/about" },
-  { label: "Blog", to: "/blog" },
-  { label: "Contact", to: "/contact" },
-];
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const navLinks = [
+    { label: t("nav.home"), to: "/" },
+    { label: t("nav.products"), to: "/products" },
+    { label: t("nav.applications"), to: "/applications" },
+    { label: t("nav.customService"), to: "/custom-service" },
+    { label: t("nav.about"), to: "/about" },
+    { label: t("nav.blog"), to: "/blog" },
+    { label: t("nav.contact"), to: "/contact" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -33,12 +36,12 @@ export default function Navbar() {
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6 py-4 lg:py-5">
-        <Link to="/" className="font-serif text-2xl font-semibold tracking-wide text-foreground">
-          Lace Atelier
+        <Link to="/" className="font-serif text-xl font-semibold tracking-wide text-foreground">
+          Cardzglobal Limited
         </Link>
 
         {/* Desktop */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
           {navLinks.map((l) => (
             <Link
               key={l.to}
@@ -50,18 +53,22 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
+          <LanguageSwitcher />
           <Link
             to="/quote"
             className="ml-2 rounded-sm bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-opacity hover:opacity-90"
           >
-            Get a Quote
+            {t("nav.getQuote")}
           </Link>
         </div>
 
         {/* Mobile toggle */}
-        <button onClick={() => setOpen(!open)} className="lg:hidden text-foreground" aria-label="Menu">
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="lg:hidden flex items-center gap-3">
+          <LanguageSwitcher />
+          <button onClick={() => setOpen(!open)} className="text-foreground" aria-label="Menu">
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
@@ -89,7 +96,7 @@ export default function Navbar() {
                 to="/quote"
                 className="mt-3 text-center rounded-sm bg-primary px-5 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground"
               >
-                Get a Quote
+                {t("nav.getQuote")}
               </Link>
             </div>
           </motion.div>
