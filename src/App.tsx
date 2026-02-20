@@ -40,6 +40,7 @@ const App = () => (
             <Route path="/custom-service" element={<CustomService />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/quote" element={<Quote />} />
             <Route path="*" element={<NotFound />} />

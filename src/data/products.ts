@@ -20,6 +20,20 @@ export type Application =
   | "Fashion Apparel"
   | "Accessories";
 
+// Alias kept for backwards-compat
+export type ApplicationType = Application;
+
+export const ALL_COLORS = ["Ivory", "White", "Champagne", "Blush", "Black", "Ecru", "Navy", "Gold", "Rose", "Nude", "Grey", "Peach", "Custom"];
+export const ALL_COMPOSITIONS = ["Nylon", "Cotton", "Polyester", "Spandex", "Silk"];
+export const ALL_WIDTHS = ["Narrow (≤30cm)", "Medium (30–130cm)", "Wide (≥130cm)"];
+export const ALL_APPLICATIONS: Application[] = ["Bridal & Wedding", "Lingerie", "Evening Dress", "Fashion Apparel", "Accessories"];
+export const MOQ_RANGES: { label: string; min?: number; max?: number }[] = [
+  { label: "≤200 yds", max: 200 },
+  { label: "201–500 yds", min: 201, max: 500 },
+  { label: "501–1000 yds", min: 501, max: 1000 },
+  { label: "1000+ yds", min: 1001 },
+];
+
 export interface Product {
   id: string;
   name: string;
