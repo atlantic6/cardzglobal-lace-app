@@ -40,8 +40,8 @@ export default function Navbar() {
           Cardzglobal Limited
         </Link>
 
-        {/* Desktop */}
-        <div className="hidden lg:flex items-center gap-6">
+        {/* Desktop – centered nav links */}
+        <div className="hidden lg:flex flex-1 items-center justify-center gap-6">
           {navLinks.map((l) => (
             <Link
               key={l.to}
@@ -53,10 +53,14 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
+        </div>
+
+        {/* Desktop right actions */}
+        <div className="hidden lg:flex items-center gap-3">
           <LanguageSwitcher />
           <Link
             to="/quote"
-            className="ml-2 rounded-sm bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-opacity hover:opacity-90"
+            className="rounded-sm bg-primary px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-opacity hover:opacity-90"
           >
             {t("nav.getQuote")}
           </Link>

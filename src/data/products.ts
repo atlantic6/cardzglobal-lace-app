@@ -4,6 +4,13 @@ import laceGuipure from "@/assets/lace-guipure.jpg";
 import laceChantilly from "@/assets/lace-chantilly.jpg";
 import laceElastic from "@/assets/lace-elastic.jpg";
 import laceCustom from "@/assets/lace-custom.jpg";
+import heroLace from "@/assets/hero-lace.jpg";
+import appBridal from "@/assets/app-bridal.jpg";
+import appEvening from "@/assets/app-evening.jpg";
+import appLingerie from "@/assets/app-lingerie.jpg";
+import appFashion from "@/assets/app-fashion.jpg";
+import appAccessories from "@/assets/app-accessories.jpg";
+import factory from "@/assets/factory.jpg";
 
 export type LaceCategory =
   | "Embroidered Lace"
@@ -20,7 +27,6 @@ export type Application =
   | "Fashion Apparel"
   | "Accessories";
 
-// Alias kept for backwards-compat
 export type ApplicationType = Application;
 
 export const ALL_COLORS = ["Ivory", "White", "Champagne", "Blush", "Black", "Ecru", "Navy", "Gold", "Rose", "Nude", "Grey", "Peach", "Custom"];
@@ -71,10 +77,12 @@ export const applications: { name: Application; slug: string; image: string; des
   { name: "Accessories", slug: "accessories", image: "", description: "Decorative lace for gloves, headpieces, and trim" },
 ];
 
+// Each product now has 5-6 images for Alibaba-style gallery
 export const products: Product[] = [
   {
     id: "1", name: "Floral Embroidered Tulle", slug: "floral-embroidered-tulle",
-    category: "Embroidered Lace", image: laceEmbroidered, images: [laceEmbroidered],
+    category: "Embroidered Lace", image: laceEmbroidered,
+    images: [laceEmbroidered, heroLace, appBridal, laceChantilly, laceCustom, appEvening],
     composition: "65% Nylon, 35% Cotton", width: "130 cm", colors: ["Ivory", "White", "Champagne", "Blush"],
     applications: ["Bridal & Wedding", "Evening Dress"], moq: "300 yards", leadTime: "15–20 days",
     customizable: true, description: "A luxurious embroidered tulle featuring delicate floral motifs, ideal for bridal gowns and couture eveningwear. Available in multiple colorways with custom color matching.",
@@ -82,7 +90,8 @@ export const products: Product[] = [
   },
   {
     id: "2", name: "Geometric Cord Lace", slug: "geometric-cord-lace",
-    category: "Cord Lace", image: laceCord, images: [laceCord],
+    category: "Cord Lace", image: laceCord,
+    images: [laceCord, laceGuipure, appFashion, heroLace, laceEmbroidered, factory],
     composition: "100% Polyester", width: "120 cm", colors: ["White", "Ecru", "Black"],
     applications: ["Fashion Apparel", "Evening Dress"], moq: "200 yards", leadTime: "10–15 days",
     customizable: true, description: "Bold geometric cord lace with dimensional texture, perfect for statement fashion pieces and structured garments.",
@@ -90,7 +99,8 @@ export const products: Product[] = [
   },
   {
     id: "3", name: "Botanical Guipure Panel", slug: "botanical-guipure-panel",
-    category: "Guipure Lace", image: laceGuipure, images: [laceGuipure],
+    category: "Guipure Lace", image: laceGuipure,
+    images: [laceGuipure, laceEmbroidered, appBridal, laceCustom, heroLace],
     composition: "80% Cotton, 20% Polyester", width: "110 cm", colors: ["White", "Ivory", "Navy"],
     applications: ["Bridal & Wedding", "Fashion Apparel"], moq: "250 yards", leadTime: "15–20 days",
     customizable: true, description: "A rich guipure lace with botanical motifs, offering a heavy, luxurious drape ideal for structured bridal and fashion designs.",
@@ -98,7 +108,8 @@ export const products: Product[] = [
   },
   {
     id: "4", name: "Classic Chantilly Allover", slug: "classic-chantilly-allover",
-    category: "Chantilly Lace", image: laceChantilly, images: [laceChantilly],
+    category: "Chantilly Lace", image: laceChantilly,
+    images: [laceChantilly, appEvening, heroLace, laceEmbroidered, appLingerie, appBridal],
     composition: "100% Nylon", width: "150 cm", colors: ["Black", "Ivory", "Nude", "White"],
     applications: ["Evening Dress", "Bridal & Wedding", "Lingerie"], moq: "500 yards", leadTime: "20–25 days",
     customizable: false, description: "Timeless Chantilly lace with fine floral details and scalloped edges. A staple for haute couture eveningwear and bridal collections.",
@@ -106,7 +117,8 @@ export const products: Product[] = [
   },
   {
     id: "5", name: "Stretch Floral Elastic", slug: "stretch-floral-elastic",
-    category: "Elastic Lace", image: laceElastic, images: [laceElastic],
+    category: "Elastic Lace", image: laceElastic,
+    images: [laceElastic, appLingerie, laceChantilly, appFashion, heroLace],
     composition: "85% Nylon, 15% Spandex", width: "90 cm", colors: ["Blush", "White", "Black", "Rose"],
     applications: ["Lingerie", "Accessories"], moq: "500 yards", leadTime: "10–12 days",
     customizable: true, description: "A soft-hand stretch lace with delicate floral pattern, engineered for comfort in intimate apparel and stretch garments.",
@@ -114,7 +126,8 @@ export const products: Product[] = [
   },
   {
     id: "6", name: "Heritage Embroidered Border", slug: "heritage-embroidered-border",
-    category: "Embroidered Lace", image: laceEmbroidered, images: [laceEmbroidered],
+    category: "Embroidered Lace", image: laceEmbroidered,
+    images: [laceEmbroidered, appAccessories, laceCustom, heroLace, appBridal, laceGuipure],
     composition: "70% Cotton, 30% Nylon", width: "25 cm", colors: ["White", "Ivory", "Gold"],
     applications: ["Bridal & Wedding", "Accessories"], moq: "1000 yards", leadTime: "12–15 days",
     customizable: true, description: "A heritage-inspired embroidered border lace with intricate scrollwork, perfect for trim, veils, and decorative accents.",
@@ -122,7 +135,8 @@ export const products: Product[] = [
   },
   {
     id: "7", name: "Modern Cord Allover", slug: "modern-cord-allover",
-    category: "Cord Lace", image: laceCord, images: [laceCord],
+    category: "Cord Lace", image: laceCord,
+    images: [laceCord, appFashion, laceEmbroidered, appEvening, heroLace, laceGuipure],
     composition: "100% Polyester", width: "130 cm", colors: ["White", "Champagne", "Grey"],
     applications: ["Fashion Apparel", "Evening Dress"], moq: "300 yards", leadTime: "15–18 days",
     customizable: true, description: "Contemporary allover cord lace with a modern abstract pattern, ideal for avant-garde fashion and structured silhouettes.",
@@ -130,7 +144,8 @@ export const products: Product[] = [
   },
   {
     id: "8", name: "Scallop Edge Elastic Trim", slug: "scallop-edge-elastic-trim",
-    category: "Elastic Lace", image: laceElastic, images: [laceElastic],
+    category: "Elastic Lace", image: laceElastic,
+    images: [laceElastic, appLingerie, laceChantilly, appFashion, laceCustom],
     composition: "90% Nylon, 10% Spandex", width: "15 cm", colors: ["White", "Black", "Nude", "Blush"],
     applications: ["Lingerie", "Fashion Apparel"], moq: "2000 yards", leadTime: "8–10 days",
     customizable: false, description: "A functional elastic trim with elegant scalloped edges, designed for underwear, bralettes, and activewear accents.",
@@ -138,7 +153,8 @@ export const products: Product[] = [
   },
   {
     id: "9", name: "Royal Guipure Motif", slug: "royal-guipure-motif",
-    category: "Guipure Lace", image: laceGuipure, images: [laceGuipure],
+    category: "Guipure Lace", image: laceGuipure,
+    images: [laceGuipure, appBridal, laceEmbroidered, heroLace, laceCustom, appEvening],
     composition: "100% Cotton", width: "100 cm", colors: ["Ivory", "White"],
     applications: ["Bridal & Wedding"], moq: "200 yards", leadTime: "20–25 days",
     customizable: true, description: "A grand-scale guipure motif lace with regal floral patterns, designed for statement bridal gowns and luxury fashion.",
@@ -146,7 +162,8 @@ export const products: Product[] = [
   },
   {
     id: "10", name: "Sheer Chantilly Border", slug: "sheer-chantilly-border",
-    category: "Chantilly Lace", image: laceChantilly, images: [laceChantilly],
+    category: "Chantilly Lace", image: laceChantilly,
+    images: [laceChantilly, appEvening, appLingerie, laceEmbroidered, heroLace],
     composition: "100% Nylon", width: "30 cm", colors: ["Black", "White", "Ivory"],
     applications: ["Evening Dress", "Lingerie", "Accessories"], moq: "800 yards", leadTime: "15–18 days",
     customizable: false, description: "A refined Chantilly border lace with gossamer sheerness and delicate eyelash edges, perfect for hems and overlays.",
@@ -154,7 +171,8 @@ export const products: Product[] = [
   },
   {
     id: "11", name: "Bespoke Design Panel", slug: "bespoke-design-panel",
-    category: "Custom Lace", image: laceCustom, images: [laceCustom],
+    category: "Custom Lace", image: laceCustom,
+    images: [laceCustom, laceEmbroidered, laceGuipure, heroLace, factory, appBridal],
     composition: "Custom blend", width: "Custom", colors: ["Any color available"],
     applications: ["Bridal & Wedding", "Evening Dress", "Fashion Apparel", "Lingerie", "Accessories"],
     moq: "Negotiable", leadTime: "25–35 days",
@@ -163,7 +181,8 @@ export const products: Product[] = [
   },
   {
     id: "12", name: "Couture Embroidered Allover", slug: "couture-embroidered-allover",
-    category: "Embroidered Lace", image: laceEmbroidered, images: [laceEmbroidered],
+    category: "Embroidered Lace", image: laceEmbroidered,
+    images: [laceEmbroidered, heroLace, appBridal, appEvening, laceChantilly, laceCustom],
     composition: "50% Silk, 50% Nylon", width: "140 cm", colors: ["Ivory", "Champagne", "Blush", "Peach"],
     applications: ["Bridal & Wedding", "Evening Dress"], moq: "200 yards", leadTime: "20–25 days",
     customizable: true, description: "A premium silk-blend embroidered lace with couture-level detail and luminous finish, for the most discerning designers.",

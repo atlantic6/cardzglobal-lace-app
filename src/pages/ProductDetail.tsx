@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { getProductBySlug } from "@/data/products";
-import { ArrowLeft, Download, ShoppingCart } from "lucide-react";
+import { ArrowLeft, Download, ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function ProductDetail() {
   const { slug } = useParams<{ slug: string }>();
   const product = getProductBySlug(slug || "");
+  const [activeImage, setActiveImage] = useState(0);
 
   if (!product) {
     return (
@@ -21,6 +23,8 @@ export default function ProductDetail() {
     );
   }
 
+  const allImages = product.images;
+
   const specs = [
     { label: "Lace Type", value: product.category },
     { label: "Composition", value: product.composition },
@@ -31,6 +35,9 @@ export default function ProductDetail() {
     { label: "Lead Time", value: product.leadTime },
     { label: "Customization", value: product.customizable ? "Available" : "Not available" },
   ];
+
+  const prevImage = () => setActiveImage((i) => (i === 0 ? allImages.length - 1 : i - 1));
+  const nextImage = () => setActiveImage((i) => (i === allImages.length - 1 ? 0 : i + 1));
 
   return (
     <Layout>
@@ -43,17 +50,52 @@ export default function ProductDetail() {
           </AnimatedSection>
 
           <div className="lg:flex gap-12">
-            {/* Image Gallery */}
+            {/* Alibaba-style Image Gallery */}
             <AnimatedSection className="lg:w-1/2 mb-8 lg:mb-0">
-              <div className="aspect-square overflow-hidden rounded-sm bg-secondary">
-                <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
-              </div>
-              {product.images.length > 1 && (
-                <div className="mt-3 grid grid-cols-4 gap-3">
-                  {product.images.map((img, i) => (
-                    <div key={i} className="aspect-square overflow-hidden rounded-sm bg-secondary cursor-pointer border-2 border-transparent hover:border-accent transition-colors">
-                      <img src={img} alt={`${product.name} ${i + 1}`} className="h-full w-full object-cover" />
+              {/* Main image with navigation arrows */}
+              <div className="relative aspect-square overflow-hidden rounded-sm bg-secondary group">
+                <img
+                  src={allImages[activeImage]}
+                  alt={`${product.name} - Image ${activeImage + 1}`}
+                  className="h-full w-full object-cover transition-opacity duration-300"
+                />
+                {allImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-background/80 text-foreground opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-background"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-background/80 text-foreground opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-background"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                    {/* Image counter */}
+                    <div className="absolute bottom-3 right-3 bg-foreground/70 text-primary-foreground text-xs px-2.5 py-1 rounded-sm">
+                      {activeImage + 1} / {allImages.length}
                     </div>
+                  </>
+                )}
+              </div>
+
+              {/* Thumbnail strip */}
+              {allImages.length > 1 && (
+                <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+                  {allImages.map((img, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveImage(i)}
+                      className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 overflow-hidden rounded-sm border-2 transition-all duration-200 ${
+                        activeImage === i
+                          ? "border-accent ring-1 ring-accent/30"
+                          : "border-transparent hover:border-muted-foreground/30"
+                      }`}
+                    >
+                      <img src={img} alt={`${product.name} thumbnail ${i + 1}`} className="h-full w-full object-cover" />
+                    </button>
                   ))}
                 </div>
               )}
