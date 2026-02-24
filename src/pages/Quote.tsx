@@ -4,9 +4,13 @@ import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Send, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+
+const RECIPIENT_EMAIL = "beautyatlantic6@gmail.com";
 
 export default function Quote() {
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
   const prefillProduct = searchParams.get("product") || "";
 
   const [form, setForm] = useState({
@@ -23,7 +27,15 @@ export default function Quote() {
       return;
     }
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1500));
+
+    // Build mailto body and open email client
+    const subject = encodeURIComponent(`Quote Request: ${form.product} — ${form.name}`);
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nPhone: ${form.phone}\nCountry: ${form.country}\nProduct: ${form.product}\nQuantity: ${form.quantity}\n\nMessage:\n${form.message}`
+    );
+    window.open(`mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`, "_self");
+
+    await new Promise((r) => setTimeout(r, 1000));
     setSuccess(true);
     setSending(false);
   };
@@ -65,10 +77,8 @@ export default function Quote() {
           <AnimatedSection>
             <div className="text-center mb-14">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">RFQ</p>
-              <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-foreground">Request a Quote</h1>
-              <p className="mt-4 text-muted-foreground max-w-lg mx-auto">
-                Fill out the form below and our team will provide a detailed quotation within 24 hours.
-              </p>
+              <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-foreground">{t("quote.title")}</h1>
+              <p className="mt-4 text-muted-foreground max-w-lg mx-auto">{t("quote.subtitle")}</p>
             </div>
           </AnimatedSection>
 
@@ -123,7 +133,7 @@ export default function Quote() {
                 disabled={sending}
                 className="w-full rounded-sm bg-primary px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50 inline-flex items-center justify-center gap-2"
               >
-                {sending ? "Submitting..." : <><Send size={14} /> Submit Quote Request</>}
+                {sending ? "Submitting..." : <><Send size={14} /> {t("quote.submit")}</>}
               </button>
             </form>
           </AnimatedSection>

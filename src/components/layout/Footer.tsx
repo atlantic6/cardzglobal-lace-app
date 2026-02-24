@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, Facebook, Instagram, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const WHATSAPP_NUMBER = "447700900123"; // Replace with real number
-const PHONE_NUMBER = "+447700900123";
-const EMAIL = "info@cardzglobal.com";
+const WHATSAPP_NUMBER = "01892749000";
+const PHONE_NUMBER = "+01892749000";
+const EMAIL = "beautyatlantic6@gmail.com";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -20,6 +20,18 @@ export default function Footer() {
             <p className="text-sm leading-relaxed text-primary-foreground/70">
               {t("footer.desc")}
             </p>
+            {/* Social Media Icons */}
+            <div className="flex items-center gap-3 mt-6">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors" aria-label="Facebook">
+                <Facebook size={16} />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors" aria-label="Instagram">
+                <Instagram size={16} />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors" aria-label="LinkedIn">
+                <Linkedin size={16} />
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}

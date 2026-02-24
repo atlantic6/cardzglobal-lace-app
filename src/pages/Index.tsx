@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, Globe, Users, Factory } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import ProductCard from "@/components/ProductCard";
@@ -21,36 +22,37 @@ const appImages: Record<string, string> = {
 };
 
 const stats = [
-  { icon: Factory, value: "18+", label: "Years of Experience" },
-  { icon: Globe, value: "50+", label: "Countries Served" },
-  { icon: Users, value: "2,000+", label: "Brand Partners" },
-  { icon: Award, value: "15+", label: "Quality Certifications" },
+  { icon: Factory, value: "18+", labelKey: "home.statYears" },
+  { icon: Globe, value: "50+", labelKey: "home.statCountries" },
+  { icon: Users, value: "2,000+", labelKey: "home.statPartners" },
+  { icon: Award, value: "15+", labelKey: "home.statCerts" },
 ];
 
 const Index = () => {
   const featured = getFeaturedProducts().slice(0, 4);
+  const { t } = useTranslation();
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center">
+      {/* Hero – reduced height */}
+      <section className="relative min-h-[70vh] flex items-center">
         <div className="absolute inset-0">
           <img src={heroLace} alt="Luxury lace textile" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />
         </div>
-        <div className="relative container mx-auto px-6 py-32 lg:py-0">
+        <div className="relative container mx-auto px-6 py-24 lg:py-0">
           <div className="max-w-xl">
             <AnimatedSection>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-4">Premium Lace Manufacturer</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-4">{t("hero.tagline")}</p>
             </AnimatedSection>
             <AnimatedSection delay={0.1}>
               <h1 className="font-serif text-5xl lg:text-7xl font-semibold leading-[1.1] text-foreground">
-                Crafting Elegance, Thread by Thread
+                {t("hero.headline")}
               </h1>
             </AnimatedSection>
             <AnimatedSection delay={0.2}>
               <p className="mt-6 text-base lg:text-lg text-muted-foreground leading-relaxed max-w-md">
-                We design and manufacture exquisite lace textiles for the world's most discerning fashion houses, bridal designers, and luxury brands.
+                {t("hero.sub")}
               </p>
             </AnimatedSection>
             <AnimatedSection delay={0.3}>
@@ -59,13 +61,13 @@ const Index = () => {
                   to="/products"
                   className="inline-flex items-center gap-2 rounded-sm bg-primary px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-opacity hover:opacity-90"
                 >
-                  View Products <ArrowRight size={14} />
+                  {t("hero.viewProducts")} <ArrowRight size={14} />
                 </Link>
                 <Link
                   to="/quote"
                   className="inline-flex items-center gap-2 rounded-sm border border-foreground/20 px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-foreground transition-colors hover:bg-secondary"
                 >
-                  Request Quote
+                  {t("hero.requestQuote")}
                 </Link>
               </div>
             </AnimatedSection>
@@ -73,48 +75,91 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Company Intro */}
+      {/* Product Categories – Premium Redesign */}
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-6">
           <AnimatedSection>
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">About Us</p>
-              <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">A Legacy of Artisanal Excellence</h2>
-              <p className="mt-6 text-muted-foreground leading-relaxed">
-                For over 18 years, Lace Atelier has been at the forefront of lace innovation. From our state-of-the-art facility, we combine traditional craftsmanship with modern technology to produce lace of unparalleled quality — trusted by over 2,000 brands worldwide.
-              </p>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Featured Categories */}
-      <section className="py-20 lg:py-28 bg-secondary/50">
-        <div className="container mx-auto px-6">
-          <AnimatedSection>
             <div className="text-center mb-14">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">Our Collection</p>
-              <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">Browse by Category</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">{t("home.collectionTag")}</p>
+              <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">{t("home.browseCategory")}</h2>
+              <p className="mt-3 text-muted-foreground max-w-md mx-auto text-sm">{t("home.categorySubtitle")}</p>
             </div>
           </AnimatedSection>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((cat, i) => (
+
+          {/* Top row: 3 large cards */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 mb-5">
+            {categories.slice(0, 3).map((cat, i) => (
               <AnimatedSection key={cat.name} delay={i * 0.1}>
                 <Link
                   to={`/products?category=${encodeURIComponent(cat.name)}`}
-                  className="group block overflow-hidden rounded-sm bg-card"
+                  className="group relative block aspect-[4/5] overflow-hidden rounded-md"
                 >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img src={cat.image} alt={cat.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-serif text-lg font-medium text-foreground group-hover:text-accent transition-colors">{cat.name}</h3>
-                    <p className="mt-1 text-xs text-muted-foreground">{cat.description}</p>
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent transition-opacity duration-500 group-hover:from-foreground/90" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="font-serif text-xl font-semibold text-primary-foreground group-hover:translate-y-0 transition-transform duration-300">
+                      {cat.name}
+                    </h3>
+                    <p className="mt-1 text-xs text-primary-foreground/70 max-w-[80%] leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      {cat.description}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-widest text-accent opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                      {t("home.explore")} <ArrowRight size={10} />
+                    </span>
                   </div>
                 </Link>
               </AnimatedSection>
             ))}
           </div>
+
+          {/* Bottom row: 3 smaller cards */}
+          <div className="grid gap-5 sm:grid-cols-3">
+            {categories.slice(3).map((cat, i) => (
+              <AnimatedSection key={cat.name} delay={(i + 3) * 0.1}>
+                <Link
+                  to={`/products?category=${encodeURIComponent(cat.name)}`}
+                  className="group relative block aspect-[3/2] overflow-hidden rounded-md"
+                >
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent transition-opacity duration-500 group-hover:from-foreground/90" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="font-serif text-lg font-semibold text-primary-foreground">
+                      {cat.name}
+                    </h3>
+                    <p className="mt-1 text-xs text-primary-foreground/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      {cat.description}
+                    </p>
+                    <span className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-widest text-accent opacity-0 group-hover:opacity-100 transition-all duration-500">
+                      {t("home.explore")} <ArrowRight size={10} />
+                    </span>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Company Intro */}
+      <section className="py-20 lg:py-28 bg-secondary/50">
+        <div className="container mx-auto px-6">
+          <AnimatedSection>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">{t("home.aboutTag")}</p>
+              <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">{t("home.aboutTitle")}</h2>
+              <p className="mt-6 text-muted-foreground leading-relaxed">{t("home.aboutDesc")}</p>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -124,11 +169,11 @@ const Index = () => {
           <AnimatedSection>
             <div className="flex items-end justify-between mb-14">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">Featured</p>
-                <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">Selected Products</h2>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">{t("home.featuredTag")}</p>
+                <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">{t("home.featuredTitle")}</h2>
               </div>
               <Link to="/products" className="hidden md:inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
-                View All <ArrowRight size={14} />
+                {t("home.viewAll")} <ArrowRight size={14} />
               </Link>
             </div>
           </AnimatedSection>
@@ -141,7 +186,7 @@ const Index = () => {
           </div>
           <div className="mt-8 text-center md:hidden">
             <Link to="/products" className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
-              View All Products <ArrowRight size={14} />
+              {t("home.viewAll")} <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -152,8 +197,8 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <AnimatedSection>
             <div className="text-center mb-14">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">Applications</p>
-              <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">Where Our Lace Comes to Life</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">{t("home.appsTag")}</p>
+              <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">{t("home.appsTitle")}</h2>
             </div>
           </AnimatedSection>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -180,11 +225,11 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s, i) => (
-              <AnimatedSection key={s.label} delay={i * 0.1}>
+              <AnimatedSection key={s.labelKey} delay={i * 0.1}>
                 <div className="text-center">
                   <s.icon size={28} className="mx-auto mb-3 text-accent" />
                   <p className="font-serif text-3xl font-semibold text-foreground">{s.value}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{t(s.labelKey)}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -201,23 +246,21 @@ const Index = () => {
         <div className="relative container mx-auto px-6 text-center">
           <AnimatedSection>
             <h2 className="font-serif text-3xl lg:text-5xl font-semibold text-primary-foreground max-w-2xl mx-auto">
-              Ready to Create Something Beautiful?
+              {t("home.ctaTitle")}
             </h2>
-            <p className="mt-4 text-primary-foreground/70 max-w-md mx-auto">
-              Share your vision with us. Our team will work closely with you to bring your lace designs to life.
-            </p>
+            <p className="mt-4 text-primary-foreground/70 max-w-md mx-auto">{t("home.ctaDesc")}</p>
             <div className="mt-8 flex justify-center gap-4 flex-wrap">
               <Link
                 to="/quote"
                 className="inline-flex items-center gap-2 rounded-sm bg-accent px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-accent-foreground transition-opacity hover:opacity-90"
               >
-                Request a Quote <ArrowRight size={14} />
+                {t("hero.requestQuote")} <ArrowRight size={14} />
               </Link>
               <Link
                 to="/custom-service"
                 className="inline-flex items-center gap-2 rounded-sm border border-primary-foreground/30 px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground transition-colors hover:border-primary-foreground/60"
               >
-                Custom Service
+                {t("nav.customService")}
               </Link>
             </div>
           </AnimatedSection>
