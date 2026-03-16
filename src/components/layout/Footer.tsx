@@ -2,15 +2,9 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, MessageCircle, Facebook, Instagram, Linkedin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-<<<<<<< HEAD
 const WHATSAPP_NUMBER = "+8801884900000";
 const PHONE_NUMBER = "+8801884900000";
 const EMAIL = "lace@cardzglobal.com";
-=======
-const WHATSAPP_NUMBER = "01892749000";
-const PHONE_NUMBER = "+01892749000";
-const EMAIL = "beautyatlantic6@gmail.com";
->>>>>>> 0cc98b7bc19fdca39c2f2657fe895585dca77115
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -95,11 +89,7 @@ export default function Footer() {
                 <MessageCircle size={14} /> WhatsApp
               </a>
               <span className="flex items-start gap-2">
-<<<<<<< HEAD
                 <MapPin size={14} className="mt-0.5 shrink-0" /> Sector-7, Uttara,Dhaka-Bangladesh. 
-=======
-                <MapPin size={14} className="mt-0.5 shrink-0" /> 123 Textile Avenue, Fashion District
->>>>>>> 0cc98b7bc19fdca39c2f2657fe895585dca77115
               </span>
             </div>
           </div>
