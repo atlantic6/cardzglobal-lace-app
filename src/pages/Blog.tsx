@@ -241,11 +241,12 @@ We offer over 200 elastic lace styles from stock, with custom development availa
 function BlogDetail({ slug }: { slug: string }) {
   const navigate = useNavigate();
   const post = blogPosts.find((p) => p.slug === slug);
+  const { t } = useTranslation();
   if (!post) return (
     <Layout>
       <section className="pt-36 pb-20 container mx-auto px-6 text-center">
-        <h1 className="font-serif text-3xl text-foreground">Post not found</h1>
-        <button onClick={() => navigate("/blog")} className="mt-6 text-accent hover:underline">← Back to Blog</button>
+        <h1 className="font-serif text-3xl text-foreground">{t("blog.postNotFound")}</h1>
+        <button onClick={() => navigate("/blog")} className="mt-6 text-accent hover:underline">← {t("blog.backToBlog")}</button>
       </section>
     </Layout>
   );
@@ -272,7 +273,7 @@ function BlogDetail({ slug }: { slug: string }) {
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto">
             <button onClick={() => navigate("/blog")} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
-              <ArrowLeft size={14} /> Back to Blog
+              <ArrowLeft size={14} /> {t("blog.backToBlog")}
             </button>
 
             {/* Tags */}
@@ -301,8 +302,8 @@ function BlogDetail({ slug }: { slug: string }) {
 
             {/* CTA */}
             <div className="mt-12 p-6 bg-secondary rounded-sm text-center">
-              <h4 className="font-serif text-lg font-medium text-foreground mb-2">Interested in our lace products?</h4>
-              <p className="text-sm text-muted-foreground mb-4">Request samples or a custom quote from our team.</p>
+              <h4 className="font-serif text-lg font-medium text-foreground mb-2">{t("blog.interestedTitle")}</h4>
+              <p className="text-sm text-muted-foreground mb-4">{t("blog.interestedDesc")}</p>
               <Link to="/quote" className="inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 transition-opacity">
                 Request a Quote <ArrowRight size={12} />
               </Link>
@@ -311,7 +312,7 @@ function BlogDetail({ slug }: { slug: string }) {
             {/* Related Posts */}
             {related.length > 0 && (
               <div className="mt-14">
-                <h3 className="font-serif text-xl font-semibold text-foreground mb-6">Related Articles</h3>
+                <h3 className="font-serif text-xl font-semibold text-foreground mb-6">{t("blog.relatedArticles")}</h3>
                 <div className="grid gap-6 sm:grid-cols-2">
                   {related.map((r) => (
                     <Link key={r.id} to={`/blog/${r.slug}`} className="group block overflow-hidden rounded-sm bg-card">
@@ -453,7 +454,7 @@ export default function Blog() {
 
           {filtered.length === 0 && (
             <div className="text-center py-20 text-muted-foreground">
-              <p>No articles found. Try a different search or category.</p>
+              <p>{t("blog.noArticles")}</p>
             </div>
           )}
         </div>

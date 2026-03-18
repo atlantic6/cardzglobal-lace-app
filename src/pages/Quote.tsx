@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Send, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
-import { useTranslation } from "react-i18next";
 
 const RECIPIENT_EMAIL = "beautyatlantic6@gmail.com";
 
@@ -23,12 +23,11 @@ export default function Quote() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.product) {
-      toast.error("Please fill in all required fields.");
+      toast.error(t("quote.required"));
       return;
     }
     setSending(true);
 
-    // Build mailto body and open email client
     const subject = encodeURIComponent(`Quote Request: ${form.product} — ${form.name}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nPhone: ${form.phone}\nCountry: ${form.country}\nProduct: ${form.product}\nQuantity: ${form.quantity}\n\nMessage:\n${form.message}`
@@ -52,15 +51,13 @@ export default function Quote() {
                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
                   <CheckCircle size={32} className="text-accent" />
                 </div>
-                <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">Quote Request Received</h1>
-                <p className="mt-4 text-muted-foreground">
-                  Thank you for your inquiry! Our team will review your request and get back to you within 24 hours with a detailed quotation.
-                </p>
+                <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground">{t("quote.successTitle")}</h1>
+                <p className="mt-4 text-muted-foreground">{t("quote.successDesc")}</p>
                 <a
                   href="/"
                   className="mt-8 inline-flex items-center gap-2 rounded-sm bg-primary px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 transition-opacity"
                 >
-                  Back to Home
+                  {t("quote.backToHome")}
                 </a>
               </AnimatedSection>
             </div>
@@ -86,46 +83,46 @@ export default function Quote() {
             <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Full Name *</label>
-                  <input type="text" value={form.name} onChange={(e) => update("name", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Your full name" />
+                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.fullName")} *</label>
+                  <input type="text" value={form.name} onChange={(e) => update("name", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Company</label>
-                  <input type="text" value={form.company} onChange={(e) => update("company", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Company name" />
+                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.company")}</label>
+                  <input type="text" value={form.company} onChange={(e) => update("company", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" />
                 </div>
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Email *</label>
-                  <input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="you@company.com" />
+                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.email")} *</label>
+                  <input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Phone</label>
-                  <input type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="+1 (234) 567-890" />
+                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.phone")}</label>
+                  <input type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" />
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Country</label>
-                <input type="text" value={form.country} onChange={(e) => update("country", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Your country" />
+                <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.country")}</label>
+                <input type="text" value={form.country} onChange={(e) => update("country", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" />
               </div>
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Product of Interest *</label>
-                  <input type="text" value={form.product} onChange={(e) => update("product", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="e.g. Embroidered Lace" />
+                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.product")} *</label>
+                  <input type="text" value={form.product} onChange={(e) => update("product", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Quantity (yards)</label>
-                  <input type="text" value={form.quantity} onChange={(e) => update("quantity", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" placeholder="Estimated quantity" />
+                  <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.quantity")}</label>
+                  <input type="text" value={form.quantity} onChange={(e) => update("quantity", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent" />
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Additional Details</label>
-                <textarea rows={4} value={form.message} onChange={(e) => update("message", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent resize-none" placeholder="Colors, patterns, usage, or any specific requirements..." />
+                <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.details")}</label>
+                <textarea rows={4} value={form.message} onChange={(e) => update("message", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-accent resize-none" />
               </div>
               <div>
-                <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Design Reference (optional)</label>
+                <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">{t("quote.designRef")}</label>
                 <div className="flex items-center justify-center rounded-sm border-2 border-dashed border-border px-4 py-8 text-center cursor-pointer hover:border-accent transition-colors">
-                  <p className="text-sm text-muted-foreground">Click to upload or drag & drop your design files</p>
+                  <p className="text-sm text-muted-foreground">{t("quote.uploadText")}</p>
                 </div>
               </div>
               <button
@@ -133,7 +130,7 @@ export default function Quote() {
                 disabled={sending}
                 className="w-full rounded-sm bg-primary px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50 inline-flex items-center justify-center gap-2"
               >
-                {sending ? "Submitting..." : <><Send size={14} /> {t("quote.submit")}</>}
+                {sending ? "..." : <><Send size={14} /> {t("quote.submit")}</>}
               </button>
             </form>
           </AnimatedSection>

@@ -32,11 +32,11 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-transparent"
+        scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-primary/90 backdrop-blur-sm"
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6 py-4 lg:py-5">
-        <Link to="/" className="font-serif text-xl font-semibold tracking-wide text-foreground">
+        <Link to="/" className={`font-serif text-xl font-semibold tracking-wide transition-colors ${scrolled ? "text-foreground" : "text-primary-foreground"}`}>
           Cardzglobal Limited
         </Link>
 
@@ -47,7 +47,7 @@ export default function Navbar() {
               key={l.to}
               to={l.to}
               className={`text-sm font-medium tracking-wide transition-colors hover:text-accent ${
-                location.pathname === l.to ? "text-accent" : "text-foreground/70"
+                location.pathname === l.to ? "text-accent" : scrolled ? "text-foreground/70" : "text-primary-foreground/80"
               }`}
             >
               {l.label}
@@ -69,7 +69,7 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <div className="lg:hidden flex items-center gap-3">
           <LanguageSwitcher />
-          <button onClick={() => setOpen(!open)} className="text-foreground" aria-label="Menu">
+          <button onClick={() => setOpen(!open)} className={`transition-colors ${scrolled ? "text-foreground" : "text-primary-foreground"}`} aria-label="Menu">
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>

@@ -125,7 +125,7 @@ export default function Products() {
 
       {/* Categories */}
       <div className="border-b border-border pb-4 mb-4">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Categories</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">{t("products.categories")}</p>
         <div className="flex flex-col gap-0.5">
           <button
             onClick={() => selectCategory("All")}
@@ -258,7 +258,7 @@ export default function Products() {
         <div className="container mx-auto px-6">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">Our Collection</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">{t("products.ourCollection")}</p>
               <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-foreground">{t("products.title")}</h1>
               <p className="mt-4 text-muted-foreground max-w-lg mx-auto">{t("products.subtitle")}</p>
             </div>
