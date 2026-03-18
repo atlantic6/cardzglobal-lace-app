@@ -258,7 +258,7 @@ export default function Products() {
         <div className="container mx-auto px-6">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">Our Collection</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">{t("products.ourCollection")}</p>
               <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-foreground">{t("products.title")}</h1>
               <p className="mt-4 text-muted-foreground max-w-lg mx-auto">{t("products.subtitle")}</p>
             </div>

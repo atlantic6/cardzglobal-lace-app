@@ -454,7 +454,7 @@ export default function Blog() {
 
           {filtered.length === 0 && (
             <div className="text-center py-20 text-muted-foreground">
-              <p>No articles found. Try a different search or category.</p>
+              <p>{t("blog.noArticles")}</p>
             </div>
           )}
         </div>
