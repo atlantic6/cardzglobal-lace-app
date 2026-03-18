@@ -47,7 +47,7 @@ export default function Navbar() {
               key={l.to}
               to={l.to}
               className={`text-sm font-medium tracking-wide transition-colors hover:text-accent ${
-                location.pathname === l.to ? "text-accent" : "text-foreground/70"
+                location.pathname === l.to ? "text-accent" : scrolled ? "text-foreground/70" : "text-primary-foreground/80"
               }`}
             >
               {l.label}
