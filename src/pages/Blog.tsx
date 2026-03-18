@@ -302,8 +302,8 @@ function BlogDetail({ slug }: { slug: string }) {
 
             {/* CTA */}
             <div className="mt-12 p-6 bg-secondary rounded-sm text-center">
-              <h4 className="font-serif text-lg font-medium text-foreground mb-2">Interested in our lace products?</h4>
-              <p className="text-sm text-muted-foreground mb-4">Request samples or a custom quote from our team.</p>
+              <h4 className="font-serif text-lg font-medium text-foreground mb-2">{t("blog.interestedTitle")}</h4>
+              <p className="text-sm text-muted-foreground mb-4">{t("blog.interestedDesc")}</p>
               <Link to="/quote" className="inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 transition-opacity">
                 Request a Quote <ArrowRight size={12} />
               </Link>
