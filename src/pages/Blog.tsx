@@ -241,11 +241,12 @@ We offer over 200 elastic lace styles from stock, with custom development availa
 function BlogDetail({ slug }: { slug: string }) {
   const navigate = useNavigate();
   const post = blogPosts.find((p) => p.slug === slug);
+  const { t } = useTranslation();
   if (!post) return (
     <Layout>
       <section className="pt-36 pb-20 container mx-auto px-6 text-center">
-        <h1 className="font-serif text-3xl text-foreground">Post not found</h1>
-        <button onClick={() => navigate("/blog")} className="mt-6 text-accent hover:underline">← Back to Blog</button>
+        <h1 className="font-serif text-3xl text-foreground">{t("blog.postNotFound")}</h1>
+        <button onClick={() => navigate("/blog")} className="mt-6 text-accent hover:underline">← {t("blog.backToBlog")}</button>
       </section>
     </Layout>
   );
