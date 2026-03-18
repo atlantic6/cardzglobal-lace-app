@@ -273,7 +273,7 @@ function BlogDetail({ slug }: { slug: string }) {
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto">
             <button onClick={() => navigate("/blog")} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors">
-              <ArrowLeft size={14} /> Back to Blog
+              <ArrowLeft size={14} /> {t("blog.backToBlog")}
             </button>
 
             {/* Tags */}
