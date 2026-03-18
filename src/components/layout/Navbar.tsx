@@ -36,7 +36,7 @@ export default function Navbar() {
       }`}
     >
       <nav className="container mx-auto flex items-center justify-between px-6 py-4 lg:py-5">
-        <Link to="/" className="font-serif text-xl font-semibold tracking-wide text-foreground">
+        <Link to="/" className={`font-serif text-xl font-semibold tracking-wide transition-colors ${scrolled ? "text-foreground" : "text-primary-foreground"}`}>
           Cardzglobal Limited
         </Link>
 
