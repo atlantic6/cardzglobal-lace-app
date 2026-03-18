@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import ProductCard from "@/components/ProductCard";
@@ -20,17 +21,17 @@ const appImages: Record<string, string> = {
 
 export default function Applications() {
   const { slug } = useParams<{ slug: string }>();
+  const { t } = useTranslation();
 
-  // Sub-page
   if (slug) {
     const app = applications.find((a) => a.slug === slug);
     if (!app) {
       return (
         <Layout>
           <div className="pt-32 pb-20 text-center container mx-auto px-6">
-            <h1 className="font-serif text-3xl">Application Not Found</h1>
+            <h1 className="font-serif text-3xl">{t("applications.notFound")}</h1>
             <Link to="/applications" className="mt-4 inline-flex items-center gap-2 text-accent hover:underline text-sm">
-              <ArrowLeft size={14} /> Back to Applications
+              <ArrowLeft size={14} /> {t("applications.backToApplications")}
             </Link>
           </div>
         </Layout>
@@ -41,7 +42,6 @@ export default function Applications() {
 
     return (
       <Layout>
-        {/* Hero */}
         <section className="relative pt-28 pb-20 lg:pt-0 lg:pb-0 lg:min-h-[60vh] flex items-center">
           <div className="absolute inset-0">
             <img src={appImages[app.name]} alt={app.name} className="h-full w-full object-cover" />
@@ -49,17 +49,16 @@ export default function Applications() {
           </div>
           <div className="relative container mx-auto px-6 py-20">
             <Link to="/applications" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6">
-              <ArrowLeft size={14} /> All Applications
+              <ArrowLeft size={14} /> {t("applications.allApplications")}
             </Link>
             <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-foreground">{app.name}</h1>
             <p className="mt-4 text-muted-foreground max-w-md">{app.description}</p>
           </div>
         </section>
 
-        {/* Related Products */}
         <section className="py-20 lg:py-28">
           <div className="container mx-auto px-6">
-            <h2 className="font-serif text-2xl lg:text-3xl font-semibold text-foreground mb-10">Related Products</h2>
+            <h2 className="font-serif text-2xl lg:text-3xl font-semibold text-foreground mb-10">{t("applications.relatedProducts")}</h2>
             {related.length > 0 ? (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 {related.map((p, i) => (
@@ -69,7 +68,9 @@ export default function Applications() {
                 ))}
               </div>
             ) : (
-              <p className="text-muted-foreground">No products found for this application. <Link to="/contact" className="text-accent hover:underline">Contact us</Link> for custom solutions.</p>
+              <p className="text-muted-foreground">
+                {t("applications.noProducts")} <Link to="/contact" className="text-accent hover:underline">{t("applications.contactUs")}</Link> {t("applications.forCustom")}
+              </p>
             )}
           </div>
         </section>
@@ -77,18 +78,15 @@ export default function Applications() {
     );
   }
 
-  // Main listing
   return (
     <Layout>
       <section className="pt-28 pb-20 lg:pt-36 lg:pb-28">
         <div className="container mx-auto px-6">
           <AnimatedSection>
             <div className="text-center mb-14">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">Applications</p>
-              <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-foreground">Where Our Lace Is Used</h1>
-              <p className="mt-4 text-muted-foreground max-w-lg mx-auto">
-                Discover how our premium lace transforms designs across fashion, bridal, and luxury markets.
-              </p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent mb-3">{t("applications.heroTag")}</p>
+              <h1 className="font-serif text-4xl lg:text-5xl font-semibold text-foreground">{t("applications.heroTitle")}</h1>
+              <p className="mt-4 text-muted-foreground max-w-lg mx-auto">{t("applications.heroDesc")}</p>
             </div>
           </AnimatedSection>
 
@@ -106,7 +104,7 @@ export default function Applications() {
                     <h3 className="font-serif text-xl font-medium text-foreground group-hover:text-accent transition-colors">{app.name}</h3>
                     <p className="mt-2 text-sm text-muted-foreground">{app.description}</p>
                     <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-accent">
-                      Explore <ArrowRight size={12} />
+                      {t("home.explore")} <ArrowRight size={12} />
                     </span>
                   </div>
                 </Link>

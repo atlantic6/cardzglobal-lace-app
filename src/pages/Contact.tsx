@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-import { useTranslation } from "react-i18next";
 
 const WHATSAPP_NUMBER = "01892749000";
 const PHONE_NUMBER = "+01892749000";
@@ -17,7 +17,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      toast.error("Please fill in all required fields.");
+      toast.error(t("contact.required"));
       return;
     }
     setSending(true);
@@ -42,7 +42,6 @@ export default function Contact() {
           </AnimatedSection>
 
           <div className="lg:flex gap-12 max-w-5xl mx-auto">
-            {/* Contact Info */}
             <AnimatedSection className="lg:w-2/5 mb-10 lg:mb-0">
               <div className="space-y-6">
                 <a href={`mailto:${EMAIL}`} className="flex items-start gap-4 group">
@@ -77,18 +76,17 @@ export default function Contact() {
                     <MapPin size={18} className="text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-foreground text-sm">Address</h3>
-                    <p className="text-sm text-muted-foreground">123 Textile Avenue, Fashion District<br />New York, NY 10001</p>
+                    <h3 className="font-medium text-foreground text-sm">{t("contact.addressLabel")}</h3>
+                    <p className="text-sm text-muted-foreground">Sector-7, Uttara, Dhaka-Bangladesh</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 aspect-video rounded-sm bg-secondary flex items-center justify-center">
-                <p className="text-sm text-muted-foreground">Map Placeholder</p>
+                <p className="text-sm text-muted-foreground">{t("contact.mapPlaceholder")}</p>
               </div>
             </AnimatedSection>
 
-            {/* Form */}
             <AnimatedSection className="lg:w-3/5" delay={0.1}>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-5 sm:grid-cols-2">
@@ -120,7 +118,7 @@ export default function Contact() {
                   disabled={sending}
                   className="w-full rounded-sm bg-primary px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
-                  {sending ? "Sending..." : t("contact.send")}
+                  {sending ? t("contact.sending") : t("contact.send")}
                 </button>
               </form>
             </AnimatedSection>
