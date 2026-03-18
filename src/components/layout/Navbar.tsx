@@ -69,7 +69,7 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <div className="lg:hidden flex items-center gap-3">
           <LanguageSwitcher />
-          <button onClick={() => setOpen(!open)} className="text-foreground" aria-label="Menu">
+          <button onClick={() => setOpen(!open)} className={`transition-colors ${scrolled ? "text-foreground" : "text-primary-foreground"}`} aria-label="Menu">
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
