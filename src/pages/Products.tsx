@@ -125,7 +125,7 @@ export default function Products() {
 
       {/* Categories */}
       <div className="border-b border-border pb-4 mb-4">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Categories</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">{t("products.categories")}</p>
         <div className="flex flex-col gap-0.5">
           <button
             onClick={() => selectCategory("All")}
