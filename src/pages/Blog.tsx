@@ -312,7 +312,7 @@ function BlogDetail({ slug }: { slug: string }) {
             {/* Related Posts */}
             {related.length > 0 && (
               <div className="mt-14">
-                <h3 className="font-serif text-xl font-semibold text-foreground mb-6">Related Articles</h3>
+                <h3 className="font-serif text-xl font-semibold text-foreground mb-6">{t("blog.relatedArticles")}</h3>
                 <div className="grid gap-6 sm:grid-cols-2">
                   {related.map((r) => (
                     <Link key={r.id} to={`/blog/${r.slug}`} className="group block overflow-hidden rounded-sm bg-card">
