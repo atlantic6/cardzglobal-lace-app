@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Send, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const RECIPIENT_EMAIL = "beautyatlantic6@gmail.com";
 
@@ -28,13 +29,31 @@ export default function Quote() {
     }
     setSending(true);
 
+    // Save to database
+    const { error } = await supabase.from("quote_requests").insert({
+      name: form.name,
+      company: form.company || null,
+      email: form.email,
+      phone: form.phone || null,
+      country: form.country || null,
+      product: form.product,
+      quantity: form.quantity || null,
+      message: form.message || null,
+    });
+
+    if (error) {
+      toast.error("Failed to send. Please try again.");
+      setSending(false);
+      return;
+    }
+
+    // Also open mailto for immediate email
     const subject = encodeURIComponent(`Quote Request: ${form.product} — ${form.name}`);
     const body = encodeURIComponent(
       `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nPhone: ${form.phone}\nCountry: ${form.country}\nProduct: ${form.product}\nQuantity: ${form.quantity}\n\nMessage:\n${form.message}`
     );
     window.open(`mailto:${RECIPIENT_EMAIL}?subject=${subject}&body=${body}`, "_self");
 
-    await new Promise((r) => setTimeout(r, 1000));
     setSuccess(true);
     setSending(false);
   };

@@ -4,6 +4,7 @@ import Layout from "@/components/layout/Layout";
 import AnimatedSection from "@/components/AnimatedSection";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const WHATSAPP_NUMBER = "01892749000";
 const PHONE_NUMBER = "+01892749000";
@@ -21,7 +22,18 @@ export default function Contact() {
       return;
     }
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1200));
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: form.name,
+      company: form.company || null,
+      email: form.email,
+      country: form.country || null,
+      message: form.message,
+    });
+    if (error) {
+      toast.error("Failed to send. Please try again.");
+      setSending(false);
+      return;
+    }
     toast.success(t("contact.success"));
     setForm({ name: "", company: "", email: "", country: "", message: "" });
     setSending(false);
