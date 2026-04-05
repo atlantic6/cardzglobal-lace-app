@@ -60,8 +60,8 @@ export default function AdminLogin() {
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-secondary">
             <Lock size={24} className="text-accent" />
           </div>
-          <h1 className="font-serif text-2xl font-semibold text-foreground">Admin Login</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Sign in to manage your website</p>
+          <h1 className="font-serif text-2xl font-semibold text-foreground">Admin {isSignUp ? "Sign Up" : "Login"}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{isSignUp ? "Create your admin account" : "Sign in to manage your website"}</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
