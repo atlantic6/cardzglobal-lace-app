@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import {
   Package, FolderOpen, FileText, Mail, MessageSquare, LogOut, Plus, Pencil, Trash2, Check, Star,
 } from "lucide-react";
+import { ImageUpload, MultiImageUpload } from "@/components/admin/ImageUpload";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Tab = "products" | "categories" | "blog" | "contacts" | "quotes";
@@ -208,7 +209,7 @@ function ProductForm({ product, categories, onSave, onCancel }: {
     description: product?.description || "",
     short_description: product?.short_description || "",
     category_id: product?.category_id || "",
-    images: (product?.images || []).join("\n"),
+    images: product?.images || [],
     colors: (product?.colors || []).join(", "),
     compositions: (product?.compositions || []).join(", "),
     widths: (product?.widths || []).join(", "),
@@ -229,7 +230,7 @@ function ProductForm({ product, categories, onSave, onCancel }: {
       description: form.description || null,
       short_description: form.short_description || null,
       category_id: form.category_id || null,
-      images: form.images.split("\n").map((s) => s.trim()).filter(Boolean),
+      images: form.images,
       colors: form.colors.split(",").map((s) => s.trim()).filter(Boolean),
       compositions: form.compositions.split(",").map((s) => s.trim()).filter(Boolean),
       widths: form.widths.split(",").map((s) => s.trim()).filter(Boolean),
@@ -278,10 +279,12 @@ function ProductForm({ product, categories, onSave, onCancel }: {
           <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Description</label>
           <textarea rows={4} value={form.description} onChange={(e) => update("description", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm resize-none" />
         </div>
-        <div>
-          <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Image URLs (one per line)</label>
-          <textarea rows={4} value={form.images} onChange={(e) => update("images", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm resize-none font-mono text-xs" />
-        </div>
+        <MultiImageUpload
+          values={form.images}
+          onChange={(urls) => update("images", urls)}
+          folder="products"
+          label="Product Images"
+        />
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Colors (comma-separated)" value={form.colors} onChange={(v) => update("colors", v)} />
           <Field label="Compositions (comma-separated)" value={form.compositions} onChange={(v) => update("compositions", v)} />
@@ -423,7 +426,7 @@ function CategoryForm({ category, onSave, onCancel }: {
           <Field label="Slug *" value={form.slug} onChange={(v) => setForm((f) => ({ ...f, slug: v }))} />
         </div>
         <Field label="Description" value={form.description} onChange={(v) => setForm((f) => ({ ...f, description: v }))} />
-        <Field label="Image URL" value={form.image_url} onChange={(v) => setForm((f) => ({ ...f, image_url: v }))} />
+        <ImageUpload value={form.image_url} onChange={(v) => setForm((f) => ({ ...f, image_url: v }))} folder="categories" label="Category Image" />
         <Field label="Display Order" value={String(form.display_order)} onChange={(v) => setForm((f) => ({ ...f, display_order: parseInt(v) || 0 }))} />
         <div className="flex gap-3 pt-4">
           <button onClick={handleSave} disabled={saving} className="rounded-sm bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 disabled:opacity-50">
@@ -583,7 +586,7 @@ function BlogForm({ post, onSave, onCancel }: {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Category" value={form.category} onChange={(v) => setForm((f) => ({ ...f, category: v }))} />
-          <Field label="Cover Image URL" value={form.cover_image} onChange={(v) => setForm((f) => ({ ...f, cover_image: v }))} />
+          <ImageUpload value={form.cover_image} onChange={(v) => setForm((f) => ({ ...f, cover_image: v }))} folder="blog" label="Cover Image" />
         </div>
         <Field label="Excerpt" value={form.excerpt} onChange={(v) => setForm((f) => ({ ...f, excerpt: v }))} />
         <div>
