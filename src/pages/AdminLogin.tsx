@@ -22,14 +22,31 @@ export default function AdminLogin() {
     e.preventDefault();
     if (!email || !password) return;
     setSubmitting(true);
-    const { error } = await signIn(email, password);
-    if (error) {
-      toast.error(error.message);
-      setSubmitting(false);
-      return;
+
+    if (isSignUp) {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        toast.error(error.message);
+        setSubmitting(false);
+        return;
+      }
+      toast.success("Account created! Signing you in...");
+      // Auto sign-in after signup
+      const { error: signInError } = await signIn(email, password);
+      if (signInError) {
+        toast.error(signInError.message);
+        setSubmitting(false);
+        return;
+      }
+    } else {
+      const { error } = await signIn(email, password);
+      if (error) {
+        toast.error(error.message);
+        setSubmitting(false);
+        return;
+      }
     }
-    // After sign in, check admin status will happen via auth state change
-    // Small delay to let the auth state propagate
+
     setTimeout(() => {
       navigate("/admin", { replace: true });
       setSubmitting(false);
