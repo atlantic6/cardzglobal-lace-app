@@ -230,7 +230,7 @@ function ProductForm({ product, categories, onSave, onCancel }: {
       description: form.description || null,
       short_description: form.short_description || null,
       category_id: form.category_id || null,
-      images: form.images.split("\n").map((s) => s.trim()).filter(Boolean),
+      images: form.images,
       colors: form.colors.split(",").map((s) => s.trim()).filter(Boolean),
       compositions: form.compositions.split(",").map((s) => s.trim()).filter(Boolean),
       widths: form.widths.split(",").map((s) => s.trim()).filter(Boolean),
