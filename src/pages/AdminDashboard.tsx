@@ -586,7 +586,7 @@ function BlogForm({ post, onSave, onCancel }: {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Category" value={form.category} onChange={(v) => setForm((f) => ({ ...f, category: v }))} />
-          <Field label="Cover Image URL" value={form.cover_image} onChange={(v) => setForm((f) => ({ ...f, cover_image: v }))} />
+          <ImageUpload value={form.cover_image} onChange={(v) => setForm((f) => ({ ...f, cover_image: v }))} folder="blog" label="Cover Image" />
         </div>
         <Field label="Excerpt" value={form.excerpt} onChange={(v) => setForm((f) => ({ ...f, excerpt: v }))} />
         <div>
