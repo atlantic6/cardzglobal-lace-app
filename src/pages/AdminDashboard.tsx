@@ -209,7 +209,7 @@ function ProductForm({ product, categories, onSave, onCancel }: {
     description: product?.description || "",
     short_description: product?.short_description || "",
     category_id: product?.category_id || "",
-    images: (product?.images || []).join("\n"),
+    images: product?.images || [],
     colors: (product?.colors || []).join(", "),
     compositions: (product?.compositions || []).join(", "),
     widths: (product?.widths || []).join(", "),
