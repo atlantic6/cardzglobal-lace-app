@@ -426,7 +426,7 @@ function CategoryForm({ category, onSave, onCancel }: {
           <Field label="Slug *" value={form.slug} onChange={(v) => setForm((f) => ({ ...f, slug: v }))} />
         </div>
         <Field label="Description" value={form.description} onChange={(v) => setForm((f) => ({ ...f, description: v }))} />
-        <Field label="Image URL" value={form.image_url} onChange={(v) => setForm((f) => ({ ...f, image_url: v }))} />
+        <ImageUpload value={form.image_url} onChange={(v) => setForm((f) => ({ ...f, image_url: v }))} folder="categories" label="Category Image" />
         <Field label="Display Order" value={String(form.display_order)} onChange={(v) => setForm((f) => ({ ...f, display_order: parseInt(v) || 0 }))} />
         <div className="flex gap-3 pt-4">
           <button onClick={handleSave} disabled={saving} className="rounded-sm bg-primary px-6 py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 disabled:opacity-50">
