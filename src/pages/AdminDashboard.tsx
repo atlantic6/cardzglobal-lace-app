@@ -279,10 +279,12 @@ function ProductForm({ product, categories, onSave, onCancel }: {
           <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Description</label>
           <textarea rows={4} value={form.description} onChange={(e) => update("description", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm resize-none" />
         </div>
-        <div>
-          <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1.5 block">Image URLs (one per line)</label>
-          <textarea rows={4} value={form.images} onChange={(e) => update("images", e.target.value)} className="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm resize-none font-mono text-xs" />
-        </div>
+        <MultiImageUpload
+          values={form.images}
+          onChange={(urls) => update("images", urls)}
+          folder="products"
+          label="Product Images"
+        />
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Colors (comma-separated)" value={form.colors} onChange={(v) => update("colors", v)} />
           <Field label="Compositions (comma-separated)" value={form.compositions} onChange={(v) => update("compositions", v)} />
