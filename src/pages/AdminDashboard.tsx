@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
-  Package, FolderOpen, FileText, Mail, MessageSquare, LogOut, Plus, Pencil, Trash2, Check, Star, Search,
+  Package, FolderOpen, FileText, Mail, MessageSquare, LogOut, Plus, Pencil, Trash2, Check, Star,
 } from "lucide-react";
 import { ImageUpload, MultiImageUpload } from "@/components/admin/ImageUpload";
 import type { Tables } from "@/integrations/supabase/types";
