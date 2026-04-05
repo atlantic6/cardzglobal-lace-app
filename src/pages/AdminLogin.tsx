@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 import { Lock } from "lucide-react";
 import { toast } from "sonner";
 
@@ -10,6 +11,7 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   if (!loading && isAdmin) {
     navigate("/admin", { replace: true });
@@ -20,14 +22,31 @@ export default function AdminLogin() {
     e.preventDefault();
     if (!email || !password) return;
     setSubmitting(true);
-    const { error } = await signIn(email, password);
-    if (error) {
-      toast.error(error.message);
-      setSubmitting(false);
-      return;
+
+    if (isSignUp) {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        toast.error(error.message);
+        setSubmitting(false);
+        return;
+      }
+      toast.success("Account created! Signing you in...");
+      // Auto sign-in after signup
+      const { error: signInError } = await signIn(email, password);
+      if (signInError) {
+        toast.error(signInError.message);
+        setSubmitting(false);
+        return;
+      }
+    } else {
+      const { error } = await signIn(email, password);
+      if (error) {
+        toast.error(error.message);
+        setSubmitting(false);
+        return;
+      }
     }
-    // After sign in, check admin status will happen via auth state change
-    // Small delay to let the auth state propagate
+
     setTimeout(() => {
       navigate("/admin", { replace: true });
       setSubmitting(false);
@@ -41,8 +60,8 @@ export default function AdminLogin() {
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-secondary">
             <Lock size={24} className="text-accent" />
           </div>
-          <h1 className="font-serif text-2xl font-semibold text-foreground">Admin Login</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Sign in to manage your website</p>
+          <h1 className="font-serif text-2xl font-semibold text-foreground">Admin {isSignUp ? "Sign Up" : "Login"}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{isSignUp ? "Create your admin account" : "Sign in to manage your website"}</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -70,7 +89,14 @@ export default function AdminLogin() {
             disabled={submitting}
             className="w-full rounded-sm bg-primary px-7 py-3.5 text-xs font-semibold uppercase tracking-widest text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
           >
-            {submitting ? "Signing in..." : "Sign In"}
+            {submitting ? (isSignUp ? "Creating account..." : "Signing in...") : (isSignUp ? "Sign Up" : "Sign In")}
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsSignUp(!isSignUp)}
+            className="w-full text-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {isSignUp ? "Already have an account? Sign in" : "Need an account? Sign up"}
           </button>
         </form>
       </div>
